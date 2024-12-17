@@ -1,92 +1,24 @@
-import { Header } from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Image from "next/image";
+import AuctionCard from "./Card";
+import { prisma } from "@/prisma";
 
-export default function Home() {
+export default async function Home() {
+  const auctions = await prisma.auction.findMany();
   return (
-    <div className="flex flex-col">
-      <div className="text-black p-4  grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="w-[400]">
-          <CardHeader>
-            <CardTitle className="border-black border-b-2">Baseball card</CardTitle>
-            <CardDescription>Date:</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <Image
-              src={"https://placehold.jp/150x150.png"}
-              height={150}
-              width={150}
-              alt={""}
-            />
-            <p>Extremely rare baseball card signed with ultimate love</p>
-          </CardContent>
-          <CardFooter className="flex gap-3">
-            <Button>View</Button>
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
-        <Card className="min-w-25 w-fit max-w-25">
-          <CardHeader>
-            <CardTitle className="border-black border-b-2">Baseball card</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <Image
-              src={"https://placehold.jp/150x150.png"}
-              height={150}
-              width={150}
-              alt={""}
-            />
-            <p>Extremely rare baseball card signed with ultimate love</p>
-          </CardContent>
-          <CardFooter className="flex gap-3">
-            <Button>View</Button>
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
-        <Card className="min-w-25 w-fit max-w-25">
-          <CardHeader>
-            <CardTitle className="border-black border-b-2">Baseball card</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <Image
-              src={"https://placehold.jp/150x150.png"}
-              height={150}
-              width={150}
-              alt={""}
-            />
-            <p>Extremely rare baseball card signed with ultimate love</p>
-          </CardContent>
-          <CardFooter className="flex gap-3">
-            <Button>View</Button>
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
-        <Card className="min-w-25 w-fit max-w-25">
-          <CardHeader>
-            <CardTitle className="border-black border-b-2">Baseball card</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <Image
-              src={"https://placehold.jp/150x150.png"}
-              height={150}
-              width={150}
-              alt={""}
-            />
-            <p>Extremely rare baseball card signed with ultimate love</p>
-          </CardContent>
-          <CardFooter className="flex gap-3">
-            <Button>View</Button>
-            <Button>Save</Button>
-          </CardFooter>
-        </Card>
+    <div className="container mx-auto py-8 ">
+      <h1 className="text-3xl font-bold mb-6 text-center text-primary">
+        Latest Auctions
+      </h1>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {auctions.map((auction) => (
+          <AuctionCard
+            key={auction.id}
+            createdAt={auction.createdAt.toString()}
+            id={auction.id}
+            title={auction.title}
+            description={auction.description}
+            imageURL={auction.imageURL}
+          />
+        ))}
       </div>
     </div>
   );

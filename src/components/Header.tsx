@@ -8,7 +8,7 @@ import Link from "next/link";
 export const Header = async () => {
   const session = await auth();
   return (
-    <div className="bg-gray-300 min-w-max ">
+    <div className="bg-black min-w-max text-white">
       <ul className="text-3xl md:text-3xl p-3 gap-3 flex flex-col md:flex-row md:justify-between items-center">
         <Link href={"/"}>
           <h1 className="">AuctionApp</h1>
@@ -16,11 +16,17 @@ export const Header = async () => {
         <ul className="flex items-center gap-4">
           {session ? (
             <>
-              <SignOut />
               <Link href="/profile">
-                <Button size={"sm"}>View Profile</Button>
+                <Button className="bg-gray-700" size={"sm"}>
+                  View Profile
+                </Button>
               </Link>
-              <Button size={"sm"}>Create Auction</Button>
+              <Link href={"/create"}>
+                <Button className="bg-gray-700" size={"sm"}>
+                  Create Auction
+                </Button>
+              </Link>
+              <SignOut />
             </>
           ) : (
             <SignIn />
